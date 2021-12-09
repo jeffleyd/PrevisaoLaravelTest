@@ -11,5 +11,8 @@ Configure o banco de dados no arquivo e o email no arquivo .ENV
 * php artisan queue:work --tries=1 (Execute esse comando em outro terminal).
 * php artisan serve
 
+* php artisan schedule:work (Execute esse comando em outro terminal para execução local)
+* Para usar no cron " * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1 "
+
 # Como acessar?
 * acesse a seguinte url http://127.0.0.1:8000/api/v1/weather
