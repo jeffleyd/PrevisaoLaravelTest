@@ -3,6 +3,7 @@
 namespace App\Services\Api\Weather;
 
 
+use App\Events\Weather\WeatherEvent;
 use App\Services\Api\Weather\Providers\MetaWeather;
 use App\Services\Api\Weather\Providers\Predicted;
 use Illuminate\Support\Facades\Http;
@@ -40,7 +41,7 @@ class Weather
         $data = $provider->search($this->region);
 
         // Registra o resultado da API de temperatura.
-        event(new \App\Events\Weather\Weather($data));
+        event(new WeatherEvent($data));
 
         return $data;
     }

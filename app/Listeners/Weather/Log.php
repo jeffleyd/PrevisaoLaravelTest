@@ -2,7 +2,7 @@
 
 namespace App\Listeners\Weather;
 
-use App\Events\Weather\Weather;
+use App\Events\Weather\WeatherEvent;
 use App\Models\WeatherLogs;
 
 class Log
@@ -20,10 +20,10 @@ class Log
     /**
      * Handle the event.
      *
-     * @param  \App\Events\Weather\Weather $event
+     * @param  \App\Events\Weather\WeatherEvent $event
      * @return void
      */
-    public function handle(Weather $event)
+    public function handle(WeatherEvent $event)
     {
         $log = new WeatherLogs;
         $log->log = json_encode($event->data);

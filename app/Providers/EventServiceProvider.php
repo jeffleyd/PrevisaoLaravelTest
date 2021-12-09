@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Events\Weather\Weather;
+use App\Events\Weather\WeatherEvent;
 use App\Listeners\Weather\Log;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        Weather::class => [
+        WeatherEvent::class => [
           Log::class,
         ],
     ];
