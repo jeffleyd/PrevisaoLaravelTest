@@ -4,8 +4,8 @@ namespace App\Services\Api\Weather;
 
 
 use App\Services\Api\Weather\Providers\MetaWeather;
+use App\Services\Api\Weather\Providers\Predicted;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Request;
 
 class Weather
 {
@@ -29,18 +29,18 @@ class Weather
 
     /**
      * Realiza a busca no provedor
-     * @return array
+     * @return Predicted
      * @throws \Exception
      */
-    public function get(): array {
+    public function get(): Predicted {
         if (!isset(self::providers[$this->provider]))
             throw new \Exception('Não foi possível encontrar a classe do provedor.');
 
         $provider = new (self::providers[$this->provider]);
         $data = $provider->search($this->region);
+
         // Registra o resultado da API de temperatura.
-        if (count($data))
-            event(new \App\Events\Weather\Weather($data));
+        event(new \App\Events\Weather\Weather($data));
 
         return $data;
     }

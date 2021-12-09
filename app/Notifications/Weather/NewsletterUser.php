@@ -44,10 +44,10 @@ class NewsletterUser extends Notification
         $data = (new Weather($notifiable->last_ip))->get();
         return (new MailMessage)
                     ->line('Olá '. $notifiable->name)
-                    ->line('O clima em '.$data['regiao'])
-                    ->line('Temperatura atual é de '.$data['temperatura'])
-                    ->line('O tempo está '.strtolower($data['clima']))
-                    ->line('Temos uma probabilidade sobre o tempo de '.$data['probabilidade'].'%')
+                    ->line('O clima em '.$data->location)
+                    ->line('Temperatura atual é de '.$data->the_temp)
+                    ->line('O tempo está '.strtolower($data->weather))
+                    ->line('Temos uma probabilidade sobre o tempo de '.$data->predictability.'%')
                     ->line('Fique por dentro do tempo todos os dias.');
     }
 
