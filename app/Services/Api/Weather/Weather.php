@@ -35,7 +35,7 @@ class Weather
      */
     public function get(): Predicted {
         if (!isset(self::providers[$this->provider]))
-            throw new \Exception('Não foi possível encontrar a classe do provedor.');
+            throw new \Exception('Não foi possível encontrar a classe do provedor.', 100);
 
         $provider = new (self::providers[$this->provider]);
         $data = $provider->search($this->region);
@@ -55,11 +55,11 @@ class Weather
     private function resolverRegion($ip) {
         $response = Http::get('http://ip-api.com/json/'.$ip);
         if ($response->status() !== 200)
-            throw new \Exception('Não foi possível consultar seu IP em nossa api, tente novamente.');
+            throw new \Exception('Não foi possível consultar seu IP em nossa api, tente novamente.', 101);
 
         $result = json_decode($response->body());
         if ($result->status === 'fail')
-            throw new \Exception('Você passou um ip inválido.');
+            throw new \Exception('Você passou um ip inválido.', 102);
 
         return $result->city;
     }

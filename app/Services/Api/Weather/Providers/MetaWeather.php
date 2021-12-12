@@ -22,11 +22,11 @@ class MetaWeather extends Predicted implements Weather
 
         $region = $this->httpClient(self::URL.self::QUERY_REGION.$this->region);
         if (!count($region))
-            throw new \Exception('Não foi possível encontrar a região');
+            throw new \Exception('Não foi possível encontrar a região', 200);
 
         $weather = $this->httpClient(self::URL.self::QUERY_LOCATION.$region[0]['woeid']);
         if (!count($weather))
-            throw new \Exception('Não foi possível encontrar os dados dessa localização');
+            throw new \Exception('Não foi possível encontrar os dados dessa localização', 201);
 
         $consolidated = $weather['consolidated_weather'][0];
 
