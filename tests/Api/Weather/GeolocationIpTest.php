@@ -2,11 +2,9 @@
 
 namespace Tests\Api\Weather;
 
-use App\Services\Api\Weather\Providers\MetaWeather;
 use App\Services\Api\Weather\Providers\Predicted;
 use App\Services\Api\Weather\Weather;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class GeolocationIpTest extends TestCase
@@ -14,9 +12,9 @@ class GeolocationIpTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Verificar se o ip do visitante é válido
+     * Verificar se o ip 127.0.0.1 é valido.
      */
-    public function test_verify_invalid_ip()
+    public function test_verify_invalid_ip_127_0_0_1()
     {
         try {
             response()->json((new Weather('127.0.0.1'))->get());
@@ -26,25 +24,23 @@ class GeolocationIpTest extends TestCase
     }
 
     /**
-     * Passando uma região vazia para o provedor
+     * Verificar se o ip localhost é válido.
      */
-    public function test_provider_fetch_string_empty()
+    public function test_verify_invalid_ip_localhost()
     {
         try {
-            $provider = new MetaWeather();
-            $provider->search('');
+            response()->json((new Weather('localhost'))->get());
         } catch (\Exception $e) {
-            $this->assertEquals(200, $e->getCode());
+            $this->assertEquals(102, $e->getCode());
         }
     }
 
     /**
-     * Validando a estrutura de saída de dados do provedor
+     * Verificar se o ip vazio é válido
      */
-    public function test_validate_struct_data_provider()
+    public function test_verify_invalid_ip_empty()
     {
-        $provider = new MetaWeather();
-        $result = $provider->search('Rio de janeiro');
-        $this->assertInstanceOf(Predicted::class, $result);
+        $res = (new Weather(''))->get();
+        $this->assertInstanceOf(Predicted::class, $res);
     }
 }
